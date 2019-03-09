@@ -1,0 +1,27 @@
+#include <iostream>
+#include <array>
+#include "MarkovModel.h"
+
+int main() {
+
+	std::string text1 = "gagggagaggcgagaaa";
+	//std::string text1 = "banana";
+	//std::string text1 = "one fish two fish red fish blue fish";
+
+	MarkovModel model1(text1, 2);
+	std::cout << model1.toString() << std::endl;
+//	std::cout << "freq: " << model1.freq("ish ", 'r') << std::endl;
+//	std::cout << "freq: " << model1.freq("ish ", 'x') << std::endl;
+//	std::cout << "freq: " << model1.freq("ish ") << std::endl;
+//	std::cout << "freq: " << model1.freq("tuna") << std::endl;
+//	std::cout << "testing random" << std::endl;
+
+	std::array<int, 128> prob {};
+	int N = 100000;
+
+	for(int i = 0; i < 100000; i++) {
+		char c = model1.random("ag");
+		prob[c]++;
+	}
+	return 0;
+}

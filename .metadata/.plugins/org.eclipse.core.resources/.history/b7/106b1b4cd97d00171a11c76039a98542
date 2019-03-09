@@ -1,0 +1,99 @@
+
+/* register map */
+
+r0 m0 aka base
+r1 m1
+r2 m2
+r3 m3
+r4 
+r5
+r6
+r7
+r8
+r9 = t0
+rA = t1
+rB = t2
+rC = t3
+rD = const0
+rE = const1
+rF = const2
+
+/* mem map, put in program */
+
+mem[0x40] = m0 /* m0 store at location 0x40 */
+mem[FE] = 0xFFFF /* put constant into memory */
+
+/* "load address" is anything, but "load" deferences memory */
+
+int i = 0;
+while(true) {
+	cur = readstdin;
+	if (cur == 0xFFFF)
+		return;
+	m[i] = cur;
+	print cur;
+	
+	(i % 4 is eqvualent to i & (4 - 1) for powers of 2 only)
+	if (i % 4 == 3) {
+		parCalc;
+}
+
+load base, 0x40
+loadaddr idx , 0
+load const1, 0xFE
+load size, 3
+
+main:	
+
+load cur, 0xFF /* read form stdin */
+xor temp, cur, const1 / cur == 0xFFFF? */
+bzero temp, halt /* end if cur == 0xFFF */ 
+store cur, 0xFF /* print out cur */
+add temp, base, idx /* temp = base + idx */
+sind cur, 0, temp /* store cur into mem[base + idx] */
+and temp, idx, size /* temp = idx & 3 same as idx % 4 */
+xor temp, temp, size /* idx % 4 == 3? */
+bzero temp, parCalc
+add idx, idx, 1
+
+parCalc:
+	pa = m[0] ^ m[1] ^ m[2] ^ m[3];
+	pa = 0;
+	for(int i = 0; i < 4; i++) 
+		pa ^= m[i] 
+	
+	loadaddr pa, 0 // cur = 0
+	loadaddr idx, 0 // idx = 1
+	loadaddr size, 4 // size
+loop:
+	xor temp, idx, size // idx == size ?
+	bzero temp, loop2 // jump to loop2
+	add temp, base + idx 
+	load temp, temp  // temp = mem[base + idx]
+	xor pa, pa, temp // pa ^= m[base + idx]
+	add idx, idx, 1 // i++
+	j loop
+	
+	p[0] = pa ^ m[2]
+	p[1] = pa ^ m[1]
+	p[2] = pa ^ m[0]
+	for(int i = 0; i < 3; i++) {
+		temp = pa ^ m[2 - i];
+		print temp 
+	}
+	
+	loadaddr idx, 0
+	loadaddr size, 3
+	loadaddr size2, 2
+loop2:
+	xor temp, idx, size // idx == size?
+	bzero temp, main // jump back to main
+	sub temp, size2, idx // temp = 2 - idx
+	load temp, temp // temp = mem[2 - idx]
+	xor temp, temp, pa // temp = pa ^  mem[2 - idx]
+	load temp, FF //print to stdout
+	add idx, idx, 1 //i++
+	j loop2
+	
+
+	

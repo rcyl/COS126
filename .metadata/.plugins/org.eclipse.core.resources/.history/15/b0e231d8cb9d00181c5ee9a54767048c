@@ -1,0 +1,25 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include <vector>
+#include <algorithm>
+
+int main() {
+
+	Term t1("abc", 123);
+	Term t2("fas", 456);
+	std::vector<Term> v;
+	v.push_back(Term("abc", 123));
+	v.push_back(t2);
+
+	sort(v.begin(), v.end());
+
+	return 0;
+}
+

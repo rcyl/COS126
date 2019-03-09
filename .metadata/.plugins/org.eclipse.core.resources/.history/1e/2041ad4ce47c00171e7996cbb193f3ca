@@ -1,0 +1,27 @@
+/*
+ * toy.h
+ *
+ *  Created on: 7 Aug, 2017
+ *      Author: rcyl
+ */
+
+#pragma once
+
+#include <stdint.h>
+#include <iostream>
+#include <fstream>
+
+class Toy {
+
+	public:
+		Toy(std::ifstream & prog);
+		void runProgram(std::istream & stdin);
+
+	private:
+		uint16_t pc = 0x10;
+		uint16_t reg[16];
+		uint16_t mem[256];
+		std::ifstream & prog;
+};
+
+

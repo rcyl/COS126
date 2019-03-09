@@ -1,0 +1,46 @@
+/*
+ * toy.cpp
+ *
+ *  Created on: 7 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include <string>
+#include "toy.h"
+
+#define PRINT(msg) std::cout << msg << std::endl;
+
+Toy::Toy(std::ifstream & prog) : prog(prog)
+{
+	std::string line;
+	if (prog.is_open()) {
+		while(getline(prog, line)) {
+			std::cout << line << std::endl;
+		}
+	}
+	prog.close();
+}
+
+void Toy::runProgram(std::istream & stdin) {
+
+	std::string line;
+
+	for(int i = pc; i < 0xFF && getline(stdin, line); i++) {
+		mem[i] = (uint16_t) std::stoi(line, 0, 0);
+	}
+
+	while(true) {
+		uint16_t ir = mem[pc++];
+
+		uint16_t op = (ir << 12) & 0xF;
+		uint16_t d = (ir << 8) & 0xF;
+		uint16_t s = (ir << 4) & 0xF;
+		uint16_t t = (ir << 0) & 0xF;
+		uint16_t addr = (ir << 0) & 0xFF;
+		if (op == 0) break; /* halt */
+
+	}
+
+
+}

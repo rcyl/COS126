@@ -1,0 +1,56 @@
+
+/* register map */
+
+r0 
+r1 
+r2 
+r3 
+r4 
+r5
+r6
+r7
+r8
+r9 = 
+rA = 
+rB = 
+rC = 
+rD = 
+rE = 
+rF = 
+
+/* "load address" is anything, but "load" deferences memory */
+
+loadaddr mask8, 8 
+
+main2:
+	load m0, 0xFF
+	and temp, m0, mask8 /* read first bit of input */
+	bpos temp, halt
+	
+	load m1, 0xFF
+	load m2, 0xFF
+	load m3, 0xFF
+	
+	jal ra, perCalc2
+	j main2
+
+loadandcheck
+	load cur, 0xFF /* read form stdin */
+	xor temp, cur, const1 / temp = (cur == 0xFFFF) */
+	bzero temp, halt /* end if cur == 0xFFFF */ 
+	store cur, 0xFF /* print out */
+	j ra
+
+parCalc2:
+	xor temp, m0, m3 // temp = m0 ^ m3
+	xor p0, m1, temp // p0 = m0 ^ m1 ^ m3
+	xor p1, m2, temp // p1 = m0 ^ m2 ^ m3
+	xor temp, m1, m2 // temp = m1 ^ m2
+	xor p2, temp, m3 // p2 = m1 ^ m2 ^ m3
+	store p0, 0xFF
+	store p1, 0xFF
+	store p2, 0xFF
+	j ra
+	
+halt:
+	0000

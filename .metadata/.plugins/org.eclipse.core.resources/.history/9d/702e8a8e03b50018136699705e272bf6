@@ -1,0 +1,96 @@
+/*
+ * main.c
+ *
+ *  Created on: Sep 10, 2018
+ *      Author: rcyl
+ *
+ *     See COS226 Assignment Seam Carving
+ */
+
+#include <iostream>
+#include <limits>
+#include <algorithm>
+
+#define ROWS	5
+#define COLS	6
+
+double pixels[ROWS][COLS] = {
+	{ 240.18, 225.59, 302.27, 159.43, 181.81, 192.99 },
+	{ 124.18, 237.35, 151.02, 234.09, 107.89, 156.67 },
+	{ 111.10, 138.69, 228.10, 133.07, 211.51, 143.75 },
+	{ 130.67, 153.88, 174.01, 284.01, 194.50, 213.53 },
+	{ 179.82, 175.49, 70.06,  270.80, 201.53, 191.29 }
+};
+
+double min[ROWS][COLS];
+
+double getMin(int i, int j);
+
+/* get min value via DP */
+double getMin(int i, int j) {
+
+	if (i < 0 || i > ROWS) return std::numeric_limits<double>::max();
+	if (j < 0 || j > COLS) return std::numeric_limits<double>::max();
+
+	/* check is already memoized */
+	if (min[i][j] != std::numeric_limits<double>::max())
+		return min[i][j];
+
+	/* first row, all min values are same energy */
+	if (i == 0) {
+		std::cout << "(" << i << ", " << j << ")";
+		return pixels[i][j];
+	}
+
+	int mi;
+	int mj;
+
+	/* compare to 3 adjacent pixels in above row */
+	double topleft = getMin(i - 1, j - 1);
+	double top = getMin(i - 1, j);
+	double topright = getMin(i - 1 , j + 1);
+	double temp, localmin;
+
+	if (topleft < top) {
+		mi = i - 1;
+		mj = j - 1;
+		temp = topleft;
+	} else {
+		mi = i - 1;
+		mj = j;
+		temp = top;
+	}
+	if (topright < temp) {
+		mi = i - 1;
+		mj = j + 1;
+		temp = topright;
+	}
+
+	localmin = temp + pixels[i][j];
+	std::cout << "(" << mi << ", " << mj << ")";
+
+	/* memoize */
+	min[i][j] = localmin;
+
+	return localmin;
+}
+
+int main(int argc, char *argv[]) {
+
+	if (argc < 3) {
+		std::cout << "Usage is seam <i> <j>" << std::endl;
+		return -1;
+	}
+
+	for(int i = 0; i < ROWS; i++) {
+		for(int j = 0; j < COLS; j++) {
+			min[i][j] = std::numeric_limits<double>::max();
+		}
+	}
+
+	int k = std::stoi(argv[1]);
+	int h = std::stoi(argv[2]);
+
+	getMin(k, h);
+}
+

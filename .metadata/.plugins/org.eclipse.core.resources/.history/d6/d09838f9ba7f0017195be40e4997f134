@@ -1,0 +1,63 @@
+
+loadaddr one, 1
+loadaddr mask3, 3 
+loadaddr mask5, 5
+loadaddr mask6, 6
+loadaddr mask7, 7
+loadaddr mask8, 8 (0x1000) to check for negative numbers
+
+main
+	load m0, 0xFF
+	xor temp, m0, mask8
+	bzero halt
+
+	load m1, 0xFF
+	load m2, 0xFF
+	load m3, 0xFF
+	
+	loadaddr idx, 0
+	pread
+	
+	pcorrectmod
+	
+pread
+	xor temp, idx, mask3
+	bzero temp, pcorrectmod (if idx == 3, end of for loop)
+	load cur, 0xFF
+	sl temp, cur, idx 
+	xor pa, pa, temp
+	add idx, idx, one
+
+pcorrectmod
+	xor temp, pa, mask3
+	bzero temp, flipm0
+	xor temp, pa, mask5
+	bzero temp, flipm0
+	xor temp, pa, mask6
+	bzero temp, flipm0
+	xor temp, pa, mask7
+	bzero temp, flipm0
+	j print
+
+flipm0
+	xor m0, m0, 1
+	print
+
+flipm0
+	xor m1, m1, 1
+	print
+
+flipm2
+	xor m2, m2, 1
+	print
+
+flipm3
+	xor m3, m3, 1
+	print
+
+print 
+	store m0, 0xFF
+	store m1, 0xFF
+	store m2, 0xFF
+	store m3, 0xFF
+	j main

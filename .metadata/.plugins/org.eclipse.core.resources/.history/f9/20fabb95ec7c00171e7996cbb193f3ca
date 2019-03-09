@@ -1,0 +1,46 @@
+1.keep reading from stdin unitil FFFF is encountered
+
+m[0] => reg[0] 
+m[1] => reg[1]
+m[2] => reg[2]
+m[3] => reg[3]
+
+p[0] => reg[4]
+p[1] => reg[5]
+p[2] => reg[6]
+
+counter => reg[7]
+temp => reg[8]
+temp2 => reg[9]
+
+mem[FE] = 0xFFFF /* put constant into memory */
+
+while(true) {
+	read from stdin into reg
+	load R8, M[FF]
+		
+		
+	if (reg == 0xFFFF)
+		halt
+	else
+		store temp as m[i]
+		increment i;
+		
+		if (i == 4) :
+			print out all m values
+			calc p1
+			print out all p values
+			i = 0;
+}
+
+
+do calc parity:
+	p1 = m1 ^ m2 ^ m4;
+	p2 = m1 ^ m3 ^ m4
+	p3 = m2 ^ m3 ^ m4
+	
+	store m1 ^ m4 into temp
+	do p1 back into p1, p2 back into p2
+	store m3 ^ m4 into temp
+	do p3 back into p3
+	

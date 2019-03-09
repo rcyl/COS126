@@ -1,0 +1,25 @@
+/*
+ * main.cpp
+ *
+ *  Created on: 3 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <QApplication>
+#include <iostream>
+#include "sierpinski.h"
+
+int main(int argc, char *argv[]) {
+
+	QApplication app(argc, argv);
+
+	Sierpinski window;
+
+	window.setWindowTitle("Sierpinski");
+	window.resize(1280, 960);
+	window.show();
+
+	return app.exec();
+}
+
+

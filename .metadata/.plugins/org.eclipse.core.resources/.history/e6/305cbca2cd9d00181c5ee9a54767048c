@@ -1,0 +1,46 @@
+/*
+ * Term.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef TERM_H_
+#define TERM_H_
+
+#pragma once
+
+#include <string>
+#include <stdexcept>
+
+class Term{
+public:
+	std::string query;
+	long weight;
+	Term(const std::string &query, long weight);
+	std::string toString();
+	bool operator<(const Term &lhs) const;
+};
+
+struct ReverseweightOrder {
+	bool operator() (const Term& lhs, const Term& rhs) const {
+		return lhs.weight > rhs.weight;
+	}
+};
+
+struct ByPrefixOrder {
+	ByPrefixOrder(int r) {
+		this-> r = r;
+	}
+	bool operator()(const Term& lhs, const Term& rhs) const {
+		std::string sublhs = lhs.query.substr(0, r);
+		std::string subrhs = rhs.query.substr(0, r);
+		return (sublhs < subrhs);
+	}
+	int r;
+};
+
+
+
+
+#endif /* TERM_H_ */

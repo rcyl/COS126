@@ -1,0 +1,17 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+
+int main() {
+
+	Term t1("abc", 123);
+
+	return 0;
+}
+

@@ -1,0 +1,66 @@
+/*
+ * BSDeluxe.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef BSDELUXE_H_
+#define BSDELUXE_H_
+
+#include <vector>
+#include <algorithm>
+
+template <typename Key>
+class BSDeluxe {
+public:
+	template<class Compare>
+	static int firstIndexOf(std::vector<Key> &a, const Key &key, Compare comp) {
+		int lo = 0;
+		int hi = a.size() - 1;
+		int champion = -1;
+		while (lo <= hi) {
+			int mid = lo + (hi - lo) / 2;
+			if (a[mid] == key) {
+				/* found champion */
+				champion = mid;
+				if (champion > mid - 1)
+					/* continue with bottom half, since
+					 * an even smaller index could be there*/
+					hi = mid - 1;
+				else
+					lo = mid + 1;
+			}
+			else if (key < a[mid]) hi = mid - 1;
+			else lo = mid + 1;
+		}
+
+		return champion;
+	}
+
+	template<class Comp>
+	static int lastIndexOf(std::vector<Key> &a, const Key &key, Comp comp) {
+		int lo = 0;
+		int hi = a.size() - 1;
+		int champion = -1;
+		while (lo <= hi) {
+			int mid = lo + (hi - lo) / 2;
+//			if (key < a[mid]) hi = mid - 1;
+//			else if (key > a[mid]) lo = mid + 1;
+//			else {
+//				champion = mid;
+//				if (champion > mid - 1)
+//					/* continue with upper half, since
+//					 * an even larger index could be there*/
+//					lo = mid + 1;
+//				else
+//					hi = mid - 1;
+//			}
+		}
+		return champion;
+	}
+};
+
+
+
+#endif /* BSDELUXE_H_ */

@@ -1,0 +1,114 @@
+/*
+ * Point.h
+ *
+ *  Created on: Aug 22, 2018
+ *      Author: rcyl
+ */
+
+#ifndef POINT_H_
+#define POINT_H_
+
+#include <iostream>
+#include <sstream>
+#include <limits>
+#include <QWidget>
+#include <QPainter>
+
+class Point {
+
+private:
+	int x;
+	int y;
+
+public:
+	Point(int x, int y): x(x), y(y) {}
+
+	double slopeTo(const Point &that) {
+
+		double numerator = that.y - y;
+		double denominator = that.x - x;
+
+		if (denominator == 0) {
+			if (numerator <= 0)
+				return -std::numeric_limits<double>::infinity();
+			return std::numeric_limits<double>::infinity();
+		}
+
+		return numerator / denominator ;
+	}
+
+	bool operator <(const Point &that) const{
+
+		if (y < that.y) return true;
+		if (y == that.y) if (x < that.x) return true;
+		return false;
+	}
+
+	bool operator ==(const Point &that) const{
+
+		return (that.y == y && that.x == x);
+	}
+
+	std::string toString() {
+
+		std::stringstream ss;
+		ss << "(" << x << ", " << y << ")";
+		return ss.str();
+	}
+
+	static bool areCollinear(Point &a, Point &b, Point &c) {
+		return (a.slopeTo(b) == a.slopeTo(c));
+	}
+
+	int getX() { return x; }
+	int getY() { return y; }
+
+};
+
+class ByPolarOder {
+
+private:
+	Point p;
+
+public:
+	ByPolarOder(const Point& p): p(p) {}
+	bool operator()(const Point &lhs, const Point &rhs) {
+		return p.slopeTo(lhs) < p.slopeTo(rhs);
+	}
+};
+
+class LinePainter : public QWidget {
+
+	Q_OBJECT
+
+private:
+	std::vector<Point> points;
+protected:
+	void paintEvent(QPaintEvent *e) {
+		 Q_UNUSED(e);
+		 this->resize(1440, 900);
+		 QPainter qp(this);
+
+		 double xscale = (1440 / 32678) * 100;
+		 double yscale = (900 / 32768) * 100;
+
+		 qp.translate(0, 900);
+		 qp.scale(xscale, -yscale);
+		 qp.setPen(QPen(Qt::red, 10, Qt::SolidLine));
+
+		 for(unsigned int i = 0; i < points.size() - 1; i+=2) {
+			 std::cout << "drawing: " << points[i].toString() << std::endl;
+			 std::cout << "drawing: " << points[i + 1].toString() << std::endl;
+			 qp.drawLine(points[i].getX(), points[i].getY(),
+					 	 points[i + 1].getX(), points[i + 1].getY());
+		 }
+	}
+public:
+	LinePainter(std::vector<Point> &points): points(points) {}
+	void draw() { this->show(); }
+
+};
+
+
+
+#endif /* POINT_H_ */

@@ -1,0 +1,131 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 22, 2018
+ *      Author: rcyl
+ */
+
+#include <QApplication>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include "Point.h"
+
+void debug();
+bool isAscending(std::vector<Point> &points);
+
+int main(int argc, char *argv[]) {
+
+	QApplication app(argc, argv);
+
+	std::vector<Point> v;
+	int x = 0, y = 0, n;
+
+	std::cin >> n;
+
+	while(std::cin >> x && std::cin >> y) {
+		v.push_back(Point(x, y));
+	}
+
+	std::vector<Point> points;
+	std::vector<Point> draw;
+
+	/* sort based on natural order first and copy into
+	 * the aux array to be sorted*/
+	sort(v.begin(), v.end());
+	std::vector<Point> c(v);
+
+	for(int i = 0; i < n; i++) {
+		sort(c.begin(), c.end(), ByPolarOder(v[i]));
+
+		int start = -1;
+		/* count and cur starts from 1 as we as considering a pair of points
+		 * at the beginning for slope comparison*/
+		unsigned int cur = 1, count = 1;
+
+		while(cur < c.size()) {
+
+//			std::cout << "ref point: " << v[i].toString() << std::endl;
+//			std::cout << "c[" << cur << "] " << c[cur].toString() << std::endl;
+//			std::cout << "c[" << cur -1  << "] "
+//						<< c[cur - 1].toString() << std::endl;
+
+			if (Point::areCollinear(v[i], c[cur], c[cur -1])) {
+				if (start < 0) start = cur - 1;
+				count++;
+			}
+			else {
+				/* end of collinear points and 3 or more points found
+				 * on top of ref point */
+				if (count >= 3) {
+					points.clear();
+					points.push_back(v[i]);
+					for(unsigned int j = start; j < start + count; j++) {
+						points.push_back(c[j]);
+					}
+					std::cout << points.size() << ": ";
+					std::cout << points[0].toString();
+					for(unsigned int j = 1; j < points.size(); j++ ) {
+						std::cout << " -> "<< points[j].toString();
+					}
+					draw.push_back(points[0]);
+					draw.push_back(points[points.size() - 1]);
+					std::cout << std::endl;
+				}
+				start = -1;
+				count = 1;
+			}
+			cur++;
+		}
+	}
+
+//	draw.clear();
+//	Point a(10000, 0);
+//	Point b(0, 10000);
+//	Point e(3000, 4000);
+//	Point d(20000, 21000);
+//	draw.push_back(a);
+//	draw.push_back(b);
+//	draw.push_back(e);
+//	draw.push_back(d);
+
+//	std::cout << "to draw" << std::endl;
+//	std::cout << "draw size" << draw.size() << std::endl;
+//	for(Point p : draw)
+//		std::cout << p.toString() << std::endl;
+
+	//LinePainter lp(draw);
+	//lp.draw();
+	//app.exec();
+}
+
+bool isAscending(std::vector<Point> &points) {
+
+	for(unsigned int i = 1; i < points.size(); i++) {
+		if ( points[i] < points[i - 1])
+			return false;
+	}
+	return true;
+}
+
+void debug() {
+
+	std::vector<Point> v;
+	Point a(2,2);
+	Point b(3,5);
+	Point c(4,5);
+	Point d(6,7);
+	v.push_back(a);
+	v.push_back(b);
+	v.push_back(c);
+	v.push_back(d);
+
+	for(Point p: v) {
+		std::cout << p.toString() << std::endl;
+	}
+	std::cout << a.slopeTo(a) << std::endl;
+	std::cout << a.slopeTo(c) << std::endl;
+
+	std::cout << (a < a) << std::endl;
+	std::cout << (b < c) << std::endl;
+}

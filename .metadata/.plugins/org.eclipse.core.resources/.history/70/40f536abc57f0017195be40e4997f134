@@ -1,0 +1,32 @@
+/*
+ * main.cpp
+ *
+ *  Created on: 7 Aug, 2017
+ *      Author: rcyl
+ */
+
+
+#include "toy.h"
+
+int main(int argc, char *argv[]) {
+
+	if (argc < 2) {
+		std::cout << "usage is toy {program name} < {input file}" << std::endl;
+		return 1;
+	}
+
+	std::string line;
+
+	std::ifstream file(argv[1]);
+	if (file.is_open()) {
+		while(getline(file, line)) {
+			std::cout << line << std::endl;
+		}
+	}
+	file.close();
+
+	//Toy toy(file);
+	//toy.runProgram(std::cin, std::cout);
+
+}
+

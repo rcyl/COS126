@@ -1,0 +1,43 @@
+/*
+ * cheat.cpp
+ *
+ *  Created on: 26 Jul 2018
+ *      Author: rcyl
+ */
+
+#include <iostream>
+
+int main() {
+
+	int M[4] = { 1, 1, 1, 1};
+	int p[3] = { 1, 1, 0 };
+	int calcpi;
+	int mor = 0
+	int cmpi;
+	int failCount = 0;
+
+	for(int i= 0; i < 4; i++) {
+		mor ^= M[i];
+	}
+
+
+	for(int i = 2; i >=0 ; i--) {
+		int pi = p[2 - i];
+		calcpi[2 - i] = mor ^ M[i];
+//		cmpi = (calcpi == pi);
+//		if (cmpi == 1) {
+//			std::cout << "Flipping bit: " << i << std::endl;
+//			failCount++;
+//			M[i] = M[i] ^ 1;
+//		}
+	}
+
+	for(int i = 0; i < 4; i++) {
+		std::cout << M[i] << std::endl;
+	}
+
+
+	return 0;
+}
+
+

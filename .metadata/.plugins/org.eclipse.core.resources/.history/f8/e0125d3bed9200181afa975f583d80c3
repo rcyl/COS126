@@ -1,0 +1,28 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Jul 29, 2018
+ *      Author: rcyl
+ */
+
+#include <QImage>
+#include <QColor>
+#include <iostream>
+#include "lfsr.h"
+
+int main() {
+	LFSR lfsr("01101000010", 9);
+	int crypt = lsfr.generate(8);
+
+	QImage qImage("src/pipe.png");
+
+	std::cout << "height: " << qImage.height() << std::endl;
+	std::cout << "width: " << qImage.width() << std::endl;
+
+	QRgb rgb = qImage.pixel(0, 0);
+	QColor qcolor(rgb);
+
+	int red = qcolor.red();
+
+}
+

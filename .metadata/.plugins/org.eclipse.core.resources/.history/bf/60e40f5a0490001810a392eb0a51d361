@@ -1,0 +1,73 @@
+edited 24th july 2018
+
+/* register map */
+
+r0 = 0
+r1 = temp
+r2 = shift
+r3 = mor
+r4 = ma
+r5 = pa
+r6 = 
+r7 = 
+r8 = 
+r9 = 
+rA = 
+rB = 
+rC = 
+rD = 
+rE = 
+rF =
+
+*/
+
+pa = 0 => mask of bits to be corrected /* p1 p2 p3 */
+mor = 0 => xor of all input msg bits
+ma = 0 => bit shifted sum of all msg bits /* m4 m3 m2 m1 */ 
+
+mi => message bit at position i, ie m3 is at bit 2 */
+
+get&shift(0)
+get&shift(1)
+get&shift(2)
+get&shift(3)
+
+p1 = (m1 ^ m2 ^ m3 ^ m4) ^ m3 =
+		m1 ^ m2 ^ m4 
+comp&shift(2)
+comp&shift(1)
+comp&shift(0)
+
+get&shift(shift):
+	mi => read frm stdin
+	mor =>  mor ^ mi
+	temp = (1 << shift)
+	ma == ma + temp
+		
+comp&shift(shift):
+	pi => read from stdin
+	mi = ma >> shift 
+	mi = temp & 1
+	temp = mor ^ mi 
+	temp = (calc_parity == recv parity)
+	if (temp != 0) //calc parity differs from recv parity
+		temp << (1 << shift)
+		pa += temp 
+		
+print(shift)
+	temp = ma >> shift
+	mi = temp & 1
+	print mi
+	
+/* to correct wrong bits */	
+ma = ma ^ pa
+
+print(0)
+print(1)
+print(2)
+print(3)
+
+
+
+*/
+

@@ -1,0 +1,36 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include "BSDeluxe.h"
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+int main() {
+
+	std::vector<Term> v;
+	v.push_back(Term("aaaa", 1));
+	v.push_back(Term("bbbb", 6));
+	v.push_back(Term("cccc", 3));
+
+	sort(v.begin(), v.end());
+	std::cout << "regular sort" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	sort(v.begin(), v.end(), ByPrefixOrder(3));
+	std::cout << "prefix order" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	int ans = BSDeluxe<Term>::firstIndexOf(v, Term("aaaa", 1), ReverseweightOrder());
+	std::cout << "ans: " << ans << std::endl;
+
+
+	return 0;
+}
+

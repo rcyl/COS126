@@ -1,0 +1,10 @@
+#include <iostream>
+#include "MarkovModel.h"
+
+int main() {
+
+	std::string tex1 = "banana";
+
+	MarkovModel model1(text1, 2);
+
+}

@@ -1,0 +1,115 @@
+
+/* register map */
+
+r0 
+r1 
+r2 
+r3 
+r4 
+r5
+r6
+r7
+r8
+r9 = t0
+rA = t1
+rB = t2
+rC = t3
+rD = const0
+rE = const1
+rF = const2
+
+/* mem map, put in program */
+
+mem[0x40] = m0 /* m0 store at location 0x40 */
+mem[FE] = 0xFFFF /* put constant into memory */
+
+/* "load address" is anything, but "load" deferences memory */
+
+load const1, 0xFE
+load one, 0x1
+load m011, 0x011 (3)
+load m101, 0x101 (5)
+load m110, 0x110 (6)
+load m111, 0x111 (7)
+load m0, memm0 (memory location of m0)
+load m1, memm1 (memory location of m0)
+load m2, memm2 (memory location of m0)
+load m3, memm3 (memory location of m0)
+
+main2:
+	jal ra, loadandcheck
+	loadaddr m0, cur
+	
+	jal ra, loadandcheck
+	loadaddr m1, cur
+	
+	jal ra, loadandcheck
+	loadaddr m2, cur
+	
+	jal ra, loadandcheck
+	loadaddr m3, cur
+	
+	jal ra, loadandcheck
+	loadaddr pa, cur
+	
+	jal ra, loadandcheck
+	sl cur, cur, 1
+	xor pa, pa, cur
+	
+	jal ra, loadandcheck
+	sl cur, cur, 2
+	xor, pa, pa, cur // pa contains bit shifted values of parity bits
+	
+	jal ra, parCorrect
+	j main2
+
+loadandcheck
+	load cur, 0xFF /* read form stdin */
+	xor temp, cur, const1 / temp = (cur == 0xFFFF) */
+	bzero temp, halt /* end if cur == 0xFFFF */ 
+	sind cur, 0 memX
+	j ra
+
+parCorrect
+	load loc, mem0
+	xor temp, pa, m011
+	bzero temp, flip
+
+flip
+	load temp, loc
+	xor temp, temp, one //flipping bit
+	sind temp, 0, loc
+	j print
+
+
+do {
+	print m[i]
+} while (i < 4);
+
+load idx, 0
+load one, 1
+load size, 4
+print:
+	lind temp, 0, idx // load mem[idx] to tmp
+	load temp, 0xFF //print
+	add idx, idx, one
+	sub temp , size, idx
+	bpos temp, print
+
+
+	
+print
+	lind temp, 0, loc0
+	store temp, 0xFF
+	
+	lind temp, 0, loc1
+	store temp, 0xFF
+	
+	lind temp 0, loc2
+	store temp, 0xFF
+	
+	lind temp 0, loc3
+	store temp, 0xFF
+
+halt:
+	0000

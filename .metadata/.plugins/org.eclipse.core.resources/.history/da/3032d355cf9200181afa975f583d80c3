@@ -1,0 +1,40 @@
+/*
+ * lfsr.cpp
+ *
+ *  Created on: Jul 29, 2018
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include <stdexcept>
+#include "lfsr.h"
+
+LFSR::LFSR() { tap = 0; seed = ""; len = 0; cur = 0;}
+
+LFSR::LFSR(std::string seed, int tap)
+			:seed(seed), tap(tap) {
+	len = seed.length();
+	if (len > MAXLEN) {
+		throw std::invalid_argument("Unsupported length");
+	}
+	cur = (uint32_t) stoi(seed, nullptr, 2);
+}
+
+LFSR::~LFSR() {}
+
+int LFSR::length() { return len; }
+
+int LFSR::bitAt(int i) {
+	uint32_t mask = (1 << i);
+	return (cur & mask) >> i;
+}
+
+std::string LFSR::toString() {
+	std::string str;
+
+	return str;
+}
+
+
+
+

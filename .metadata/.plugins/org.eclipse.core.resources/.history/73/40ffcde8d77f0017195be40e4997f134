@@ -1,0 +1,124 @@
+/*
+ * toy.cpp
+ *
+ *  Created on: 7 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <iomanip>
+#include <string>
+#include "toy.h"
+
+//#define DEBUG
+
+#define PRINT(msg) std::cout << msg << std::endl;
+
+Toy::Toy(std::ifstream & prog) : prog(prog)
+{
+	pc = 0x10;
+
+	for(int i = 0; i < 16; i++)
+		reg[i] = 0;
+
+	for(int i = 0; i < 256; i++)
+		mem[i] = 0;
+}
+
+void Toy::runProgram(std::istream & stdin, std::ostream & stdout) {
+
+	std::string line;
+	char input[6];
+
+	for(uint16_t i = pc; i < 0xFF && getline(prog, line); i++)
+		mem[i] = (uint16_t) std::stoi(line, nullptr, 16);
+
+	while(true) {
+
+#ifdef DEBUG
+		for(int i = 0; i < 16; i++) {
+			std::cout << std::setbase(16);
+			if (reg[i] != 0)
+				std::cout << "reg[" << i << "] : " << reg[i] << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << "pc: " << pc << std::endl;
+#endif
+
+		uint16_t ir = mem[pc++];
+		uint16_t op = (ir >> 12) & 0xF;
+		uint16_t d = (ir >> 8) & 0xF;
+		uint16_t s = (ir >> 4) & 0xF;
+		uint16_t t = (ir >> 0) & 0xF;
+		uint16_t addr = (ir >> 0) & 0xFF;
+
+#ifdef DEBUG
+		std::cout<< "ir: " << ir << std::endl;
+		std::cout << "op: " << op;
+		std::cout << ", d: " << d;
+		std::cout << ", s: " << s;
+		std::cout << ", t: " << t;
+		std::cout << ", addr: " << addr << std::endl;
+#endif
+
+		if (op == 0) break; /* halt */
+
+		switch(op) {
+
+			case 0x1: reg[d] = reg[s] + reg[t]; break;
+			case 0x2: reg[d] = reg[s] - reg[t]; break;
+			case 0x3: reg[d] = reg[s] & reg[t]; break;
+			case 0x4: reg[d] = reg[s] ^ reg[t]; break;
+			case 0x5: reg[d] = reg[s] << reg[t]; break;
+			case 0x6: reg[d] = reg[s] >> reg[t]; break;
+			case 0x7: reg[d] = addr; break;
+			case 0x8:
+				if (addr == 0xFF)
+					stdout << std::setw(4) << std:: setfill('0')<< reg[d] << std::endl;
+				else
+					reg[d] = mem[addr];
+				break;
+			case 0x09:
+				if (addr == 0xFF) { /* read from stdin */
+					/* read 5 chars, tilde used so that read doesnt
+					 * end when default delim of \n encountered */
+					std::cin.get(input, 6, '~');
+					line = input;
+					/* replace annoying new line */
+					std::replace(line.begin(), line.end(), '\n', '\0');
+					reg[d] = (uint16_t) std::stoi(line, nullptr, 16);
+				}
+				else {
+					mem[addr] = reg[d];
+				}
+				break;
+			case 0xA:
+				if (reg[t] == 0xFF)
+					stdout << std::setw(4) << std:: setfill('0')<< reg[d] << std::endl;
+				else
+					reg[d] = mem[reg[t]];
+				break;
+			case 0xB:
+				if (reg[t] == 0xFF) {
+					std::cin.get(input, 6, '~');
+					line = input;
+					std::replace(line.begin(), line.end(), '\n', '\0');
+					reg[d] = (uint16_t) std::stoi(line, nullptr, 16);
+				} else {
+					mem[reg[t]] = reg[d];
+				}
+				break;
+			case 0xC:
+				if (reg[d] == 0) pc = addr; break;
+			case 0xD:
+				if (reg[d] > 0) pc = addr; break;
+			case 0xE:
+				pc = reg[d]; break;
+			case 0xF: /* store address of "next" pc (since pc++ above) into reg, and jumps into addr*/
+				reg[d] = pc; pc = addr; break;
+		}
+	}
+}

@@ -1,0 +1,46 @@
+
+/* register map */
+
+r[0] 
+r[1] = m0
+r[2] = m1
+r[3] = m2
+r[4] = m3
+r[5] = p0
+r[6] = p1
+r[7] = p2
+r[8] = mask8
+r[9] = temp
+r[A] = &main
+r[B] = 
+r[C]= 
+r[D] = 
+r[E] = 
+r[F] = 
+
+loadaddr mask8, 8 
+
+main:
+	store m0, 0xFF
+	and temp, m0, mask8 /* read first bit of input */
+	bpos temp, halt
+	
+	store m1, 0xFF
+	store m2, 0xFF
+	store m3, 0xFF
+	
+	(perCalc2)
+	xor temp, m0, m3 // temp = m0 ^ m3
+	xor p0, m1, temp // p0 = m0 ^ m1 ^ m3
+	xor p1, m2, temp // p1 = m0 ^ m2 ^ m3
+	xor temp, m1, m2 // temp = m1 ^ m2
+	xor p2, temp, m3 // p2 = m1 ^ m2 ^ m3
+	
+	(print)
+	load p0, 0xFF
+	load p1, 0xFF
+	load p2, 0xFF
+	
+	j main2
+halt:
+	0000

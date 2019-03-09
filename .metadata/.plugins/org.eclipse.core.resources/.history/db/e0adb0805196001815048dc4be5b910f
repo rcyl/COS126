@@ -1,0 +1,36 @@
+/*
+ * MarkovModel.h
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+#ifndef MARKOVMODEL_H_
+#define MARKOVMODEL_H_
+
+#include <vector>
+#include <map>
+#include <tuple>
+#include <array>
+
+typedef std::tuple<int, std::array<int, 128>> tuple;
+
+class MarkovModel {
+	int k;
+	std::string str;
+	std::map<std::string, tuple> map;
+
+	//key is kgram, need to store kgram frequency, array of next char frequency
+public:
+	MarkovModel(std::string text, int k);
+	int order();
+	std::string toString();
+	int freq(const std::string kgram);
+	int freq(const std::string kgram, char c);
+	char random(const std::string kgram);
+};
+
+
+
+
+#endif /* MARKOVMODEL_H_ */

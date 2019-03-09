@@ -1,0 +1,45 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include "BSDeluxe.h"
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+int main() {
+
+	std::vector<Term> v;
+	v.push_back(Term("a", 1));
+	v.push_back(Term("b", 6));
+	v.push_back(Term("c", 3));
+	v.push_back(Term("a", 1));
+	v.push_back(Term("b", 6));
+	v.push_back(Term("c", 3));
+	v.push_back(Term("a", 1));
+	v.push_back(Term("b", 6));
+	v.push_back(Term("c", 3));
+	v.push_back(Term("a", 1));
+	v.push_back(Term("b", 6));
+	v.push_back(Term("c", 3));
+
+	sort(v.begin(), v.end());
+	std::cout << "regular sort" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	int ans = BSDeluxe<Term>::firstIndexOf(v, Term("a", 1), ReverseWeightOrder);
+	std::cout << "first-> " << ans << std::endl;
+
+	int ans = BSDeluxe<Term>::lastIndexOf(v, Term("a", 1), ReverseWeightOrder);
+	std::cout << "ans->: " << ans << std::endl;
+
+
+
+	return 0;
+}
+

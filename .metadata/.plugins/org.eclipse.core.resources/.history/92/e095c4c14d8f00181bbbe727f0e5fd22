@@ -1,0 +1,167 @@
+edited 24th july 2018
+
+/* register map */
+
+r0 = 
+r1 = 
+r2 = 
+r3 = 
+r4 = 
+r5 = 
+r6 = 
+r7 = 
+r8 = 
+r9 = 
+rA = 
+rB = 
+rC = 
+rD = 
+rE = 
+rF =
+
+*/
+
+ma = 0
+pa = 0
+mor = 0
+
+get m1, m2, m3, m4
+
+m1 = (1 << 0)
+ma += m1
+
+mor = mor ^ m1
+m1 = (1 << 0)
+ma += m1
+
+mor = mor ^ m2
+m1 = (1 << 0)
+ma += m1
+
+mor = mor ^ m3
+m1 = (1 << 0)
+ma += m1
+
+mor = mor ^ m4
+m1 = (1 << 0)
+ma += m1
+
+
+m2 = (1 << 1)
+ma += m2
+m2 = (1 << 2)
+ma += m2
+m3 = (1 << m3)
+ma += m3
+
+calc p1 = ma xor m3
+get p1 from stdin
+compare stdin p1 with calc p1
+if (!zero) 
+	pa << (1 << 2)
+	pa += pa
+
+calc p2 = ma xor m2
+get p2 from stdin
+compare stdin p2 with calc p2
+if (!zero)
+	pa << (1 << 1)
+	pa += p2
+
+calc p3 = ma xor m1
+get p3 from stdin
+compare stdin p3 with calc p3
+if (!zero)
+	pa << (1 << 0)
+	pa += p3
+	
+xor ma with pa
+
+print ma >> 0
+print ma >> 1
+print ma >> 2
+print ma >> 3
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+/* register map */
+
+r0 = 
+r1 = one
+r2 = temp
+r3 = mask3
+r4 = pa
+r5 = mask5
+r6 = mask6
+r7 = mask7
+r8 = mask8
+r9 = idx
+rA = m0
+rB = m1
+rC = m2
+rD = m3
+rE = &main
+rF = 
+
+
+
+
+main
+	store m0, 0xFF // 9AFF
+	and temp, m0, mask8 /* read first bit of input */ // 32A8
+	bpos temp, halt // D2XX
+
+	store m1, 0xFF // 9BFF
+	store m2, 0xFF // 9CFF
+	store m3, 0xFF // 9DFF
+	
+	loadaddr pa, 0 // 7400
+	loadaddr idx, 0 // 7900
+	(pread)
+	store temp, 0xFF // 92FF 
+	sr temp, temp, idx // 6229
+	xor pa, pa, temp // 4442
+	add idx, idx, one // 1991
+	sub temp, mask3, idx // 2239
+	bpos temp, pread // D2XX
+	
+	(pcorrectmod)
+	xor temp, pa, mask3 // 4243
+	bpos temp, flipm1 // ( mask != pa, go to next flip) // C2XX
+	xor m0, m0, 1 // 4AA1
+	
+	(flipm1)
+	xor temp, pa, mask5 // 4245
+	bpos temp, flipm2 // C2XX
+	xor m1, m1, 1 // 4BB1
+	
+	(flipm2)
+	xor temp, pa, mask6 // 4246
+	bpos temp, flipm3 // C2XX
+	xor m2, m2, 1 // 4CC1
+	
+	(flipm3)
+	xor temp, pa, mask7 // 4247
+	bpos temp, print // C2XX
+	xor m3, m3, 1 // 4DD1
+	
+	(print)
+	load m0, 0xFF // 8AFF
+	load m1, 0xFF // 8BFF
+	load m2, 0xFF // 8CFF
+	load m3, 0xFF // 8DFF
+	ja main // EE00
+	
+halt:
+	0000

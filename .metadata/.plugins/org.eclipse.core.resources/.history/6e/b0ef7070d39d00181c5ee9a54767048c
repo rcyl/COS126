@@ -1,0 +1,23 @@
+/*
+ * BSDeluxe.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef BSDELUXE_H_
+#define BSDELUXE_H_
+
+#include <vector>
+
+template <typename Key>
+static class BSDeluxe {
+
+public:
+	static int firstIndexOf(std::vector<Key> a, const Key &key, )
+
+};
+
+
+
+#endif /* BSDELUXE_H_ */

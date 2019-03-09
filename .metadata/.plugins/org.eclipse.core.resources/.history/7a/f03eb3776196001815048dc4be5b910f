@@ -1,0 +1,8 @@
+#include <iostream>
+#include "MarkovModel.h"
+
+int main() {
+
+	std::string tex1 = "banana";
+
+}

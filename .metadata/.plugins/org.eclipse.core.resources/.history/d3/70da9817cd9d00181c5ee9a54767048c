@@ -1,0 +1,31 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+int main() {
+
+	std::vector<Term> v;
+	v.push_back(Term("z", 1));
+	v.push_back(Term("y", 6));
+	v.push_back(Term("a", 3));
+	v.push_back(Term("s", 2));
+	v.push_back(Term("t", 5));
+	v.push_back(Term("e", 4));
+
+	sort(v.begin(), v.end(), ReverseweightOrder());
+	for(Term t : v) {
+		std::cout << t.toString() << std::endl;
+	}
+
+	return 0;
+}
+

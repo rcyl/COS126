@@ -1,0 +1,11 @@
+#include <iostream>
+#include "MarkovModel.h"
+
+int main() {
+
+	//std::string text1 = "gagggagaggcgagaaa";
+
+	MarkovModel model1(text1, 2);
+	std::cout << model1.toString() << std::endl;
+	return 0;
+}

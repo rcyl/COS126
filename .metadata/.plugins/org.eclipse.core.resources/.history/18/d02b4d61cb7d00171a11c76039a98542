@@ -1,0 +1,99 @@
+1.keep reading from stdin unitil FFFF is encountered
+
+/* register map */
+
+r0 (base) address of m in memory 
+r1 m1
+r2 m2
+r3 m3
+r4 m4
+r5
+r6
+r7
+r8
+r9
+rA = t1
+rB = t2
+rC = t3
+rD = const1
+rE = const2
+rF = const3
+
+/* mem map */
+
+mem[0x40] = m0
+mem[FE] = memFFFF /* put constant into memory */
+mem[halt] = memHalt
+mem[calc] = memCalc
+
+/* "load address" is anything, but "load" deferences memory */
+
+/*************** ASSEMBLY *****************/
+loadaddr base, m0
+loadaddr i , 0
+load constant1, memFFFF
+
+
+while(true) {
+	read from stdin into reg
+	load t1, mem[FF]
+
+main:	
+	if (reg == 0xFFFF)
+		halt
+	xor 	temp, temp, const1 
+	bzero	temp, memHalt /* to be defined */
+	
+	
+	
+	else
+		store temp as m[i] /* temp is cur m value */
+		
+		add temp2, base, idx /* temp2 has base + idx */
+		sind temp, 0, temp2 /* store temp into location at idx */
+		
+		/*if (i == 4) :
+			memCalc */
+		loadaddr temp2, 4 /* load idx with 4 */
+		xor temp2, temp2, idx /* xor idx with 4 */
+		bzero temp2, memCalc
+			
+		add idx, idx, 1 /* increment i by 1 */
+		j main
+		
+}
+
+memCalc:
+	/* print all m values */
+	for(int i = 0; i < 4; i++) 
+		print m[i]
+		
+	loadaddr temp, 0 /* i = 0 */
+	add temp2, base, temp /* temp2 holds base + 0 */
+	lind m1, 0, temp2 // load indirrect to get mem[base + 0]
+	store m1, FF
+	
+	add temp, temp, 1 //i = 1
+	add temp2, base, temp // temp2 hold base + 1
+	lind m2, 0, temp2 // m2 = mem[base + 1]
+	
+	add temp, temp 1 //i = 2
+	add temp2, base, temp // temp2 hold base + 2
+	lind m3, 0, temp2 // m2 = mem[base + 2]
+
+	
+	print out all m values
+	calc p1,p2,p3
+	print out all p values
+	i = 0;
+
+memParityCalc:
+	p1 = m1 ^ m2 ^ m4;
+	p2 = m1 ^ m3 ^ m4
+	p3 = m2 ^ m3 ^ m4
+	
+	store m1 ^ m4 into temp
+	do p1 back into p1, p2 back into p2
+	store m3 ^ m4 into temp
+	do p3 back into p3
+	

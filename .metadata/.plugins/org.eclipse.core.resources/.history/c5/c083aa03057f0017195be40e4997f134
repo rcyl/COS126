@@ -1,0 +1,70 @@
+
+/* register map */
+
+r0 
+r1 
+r2 
+r3 
+r4 
+r5
+r6
+r7
+r8
+r9 = t0
+rA = t1
+rB = t2
+rC = t3
+rD = const0
+rE = const1
+rF = const2
+
+/* mem map, put in program */
+
+mem[0x40] = m0 /* m0 store at location 0x40 */
+mem[FE] = 0xFFFF /* put constant into memory */
+
+/* "load address" is anything, but "load" deferences memory */
+
+
+	
+
+load const1, 0xFE
+
+main2:
+	jal ra, loadandcheck
+	loadaddr m0, cur
+	
+	jal ra, loadandcheck
+	loadaddr m1, cur
+	
+	jal ra, loadandcheck
+	loadaddr m2, cur
+	
+	jal ra, loadandcheck
+	loadaddr m3, cur
+	
+	jal ra, perCalc2
+	j main2
+
+loadandcheck
+	load cur, 0xFF /* read form stdin */
+	xor temp, cur, const1 / temp = (cur == 0xFFFF) */
+	bzero temp, halt /* end if cur == 0xFFFF */ 
+	store cur, 0xFF /* print out */
+	j ra
+
+parCalc2:
+	p0 = m0 ^ m1 ^ m3
+	p1 = m0 ^ m2 ^ m3
+	p2 = m1 ^ m2 ^ m3
+	
+	xor temp, m0, m3 //m0 and m3
+	xor p0, m1, temp
+	xor p1, m2, temp
+	xor temp, m1, m2
+	xor p2, temp, m3
+	store p0, 0xFF
+	store p1, 0xFF
+	store p2, 0xFF
+	j ra
+	

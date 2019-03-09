@@ -1,0 +1,53 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include "BSDeluxe.h"
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+void debug();
+
+int main() {
+
+	debug();
+
+	return 0;
+}
+
+void debug() {
+
+	std::vector<Term> v;
+	v.push_back(Term("aaae", 1));
+	v.push_back(Term("bbb", 2));
+	v.push_back(Term("ccc", 3));
+	v.push_back(Term("aaaa", 4));
+	v.push_back(Term("bbb", 5));
+	v.push_back(Term("ccc", 6));
+	v.push_back(Term("aaac", 7));
+	v.push_back(Term("bbb", 8));
+	v.push_back(Term("ccc", 9));
+	v.push_back(Term("aaab", 10));
+	v.push_back(Term("bbb", 11));
+	v.push_back(Term("ccc", 12));
+
+	sort(v.begin(), v.end());
+	std::cout << "lexi sort sort" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	int first = BSDeluxe<Term>::firstIndexOf(v, Term("aaa", 1), ByPrefixOrder<Term>(1));
+	std::cout << "first-> " << first << std::endl;
+
+	int last = BSDeluxe<Term>::lastIndexOf(v, Term("aaa", 1), ByPrefixOrder<Term>(3));
+	std::cout << "last->: " << last << std::endl;
+
+	sort(v.begin() + first, v.begin() + last + 1, ReverseWeightOrder<Term>());
+	std::cout << "after sorting, reverse weight" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+}

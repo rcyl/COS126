@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="329" key="DIALOG_WIDTH"/>
+		<item value="274" key="DIALOG_Y_ORIGIN"/>
+		<item value="774" key="DIALOG_X_ORIGIN"/>
+		<item value="409" key="DIALOG_HEIGHT"/>
+		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="" key="selection"/>
+		<list key="findhistory">
+			<item value="&#x0A;//&#x09;&#x09;&#x09;std::cout &lt;&lt; &quot;ref point: &quot; &lt;&lt; v[i].toString() &lt;&lt; std::endl;&#x0A;//&#x09;&#x09;&#x09;std::cout &lt;&lt; &quot;c[&quot; &lt;&lt; cur &lt;&lt; &quot;] &quot; &lt;&lt; c[cur].toString() &lt;&lt; std::endl;&#x0A;//&#x09;&#x09;&#x09;std::cout &lt;&lt; &quot;c[&quot; &lt;&lt; cur -1  &lt;&lt; &quot;] &quot; &lt;&lt; c[cur - 1].toString() &lt;&lt; std::endl;&#x0A;"/>
+			<item value="&#x09;std::cout &lt;&lt; &quot;ref point: &quot; &lt;&lt; v[i].toString() &lt;&lt; std::endl;"/>
+			<item value="&#x09;//&#x09;&#x09;&#x09;std::cout &lt;&lt; &quot;c[&quot; &lt;&lt; cur &lt;&lt; &quot;] &quot; &lt;&lt; c[cur].toString() &lt;&lt; std::endl;"/>
+			<item value="//&#x09;bool operator &lt;(const Point &amp;that) const{"/>
+			<item value="&#x0A;&#x09;bool operator &lt;(const Point &amp;that) const{&#x0A;&#x0A;&#x09;&#x09;if (y &lt; that.y) return true;&#x0A;&#x09;&#x09;if (y == that.y) if (x &lt; that.x) return true;&#x0A;&#x09;&#x09;return false;&#x0A;&#x09;}"/>
+			<item value="if (set.find(v[i].slopeTo(c[cur])) != set.end())"/>
+			<item value="&#x09;&#x09;&#x09;//&#x09;&#x09;std::cout &lt;&lt; &quot;c[&quot; &lt;&lt; j &lt;&lt; &quot;] &quot; &lt;&lt; c[j].toString() &lt;&lt; std::endl;"/>
+			<item value="&#x09;for(unsigned int i = 0; i &lt; print.size() - 1; i++) {"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+</section>

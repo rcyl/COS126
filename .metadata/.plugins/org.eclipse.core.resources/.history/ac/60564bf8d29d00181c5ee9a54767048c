@@ -1,0 +1,18 @@
+/*
+ * BSDeluxe.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef BSDELUXE_H_
+#define BSDELUXE_H_
+
+static class BSDeluxe {
+
+
+};
+
+
+
+#endif /* BSDELUXE_H_ */

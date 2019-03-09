@@ -1,0 +1,65 @@
+/*
+ * sierpinski.cpp
+ *
+ *  Created on: 3 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <QtMath>
+#include <iostream>
+#include "sierpinski.h"
+
+
+const qreal SQRT3 = 1.73205080757;
+
+Sierpinski::Sierpinski(qreal len, int N, QWidget *parent) : QWidget(parent), len(len), N(N){
+
+};
+
+Sierpinski::~Sierpinski() { };
+
+qreal Sierpinski::calcHeight(qreal len) {
+
+	return len / 2 * SQRT3;
+}
+
+
+void Sierpinski::sierpinski(int n, qreal x, qreal y, qreal length) {
+
+	if (n == 0)
+		return;
+
+
+}
+
+void Sierpinski::paintEvent(QPaintEvent *e) {
+
+	 Q_UNUSED(e);
+	 doDrawing();
+}
+
+void Sierpinski::doDrawing() {
+
+	QPainter qp(this);
+	qp.translate(width() / 2 , height() / 2);
+
+	QPolygon poly;
+//	qreal height = len / 2 * SQRT3;
+//
+//	poly << QPoint(offset, 0) << QPoint(len + offset, 0) << QPoint((len/2) + offset, height);
+//
+//	QPen pen(Qt::red, 1, Qt::SolidLine);
+//	qp.setPen(pen);
+//
+//	QBrush brush;
+//	brush.setColor(Qt::red);
+//	brush.setStyle(Qt::SolidPattern);
+//
+//	QPainterPath path;
+//	path.addPolygon(poly);
+//
+//	// Draw polygon
+//	qp.drawPolygon(poly);
+//	qp.fillPath(path, brush);
+
+}

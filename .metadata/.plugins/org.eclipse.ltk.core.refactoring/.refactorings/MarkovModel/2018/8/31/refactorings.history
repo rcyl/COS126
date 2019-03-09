@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;MarkovModel/MarkovMode.cpp&apos; to &apos;TextGenerator.cpp&apos;" description="Rename resource &apos;MarkovMode.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="MarkovMode.cpp" name="TextGenerator.cpp" stamp="1533302055439" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;MarkovModel/Copy of Makefile&apos; to &apos;Makefile&apos;" description="Rename resource &apos;Copy of Makefile&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Copy of Makefile" name="Makefile" stamp="1533310501722" updateReferences="true"/>
+</session>

@@ -1,0 +1,39 @@
+/*
+ * lfsr.h
+ *
+ *  Created on: Jul 29, 2018
+ *      Author: rcyl
+ */
+
+#ifndef LFSR_H_
+#define LFSR_H_
+
+#include <string>
+#include <cstdint>
+
+#pragma once
+
+#define MAXLEN	32
+
+class LFSR {
+private:
+	std::queue seed;
+	std::string seed;
+	int tap;
+	int len;
+	int cur;
+
+public:
+	LFSR();
+	LFSR(std::string seed, int tap);
+	~LFSR();
+	int length();
+	int bitAt(int i);
+	std::string toString();
+	int step();
+	int generate(int k);
+};
+
+
+
+#endif /* LFSR_H_ */

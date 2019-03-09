@@ -1,0 +1,15 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+
+int main() {
+
+	return 0;
+}
+

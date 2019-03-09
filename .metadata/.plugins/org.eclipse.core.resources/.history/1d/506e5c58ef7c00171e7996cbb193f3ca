@@ -1,0 +1,56 @@
+1.keep reading from stdin unitil FFFF is encountered
+
+
+
+temp => r6
+temp2 => r7
+const 0xFFFF => reg[9]
+counter => reg[10]
+
+/* use m into mem */
+mem[0x20] = m1,
+mem[0x21] = m2,
+mem[0x22] = m3,
+mem[0x23] = m4
+reg0 contains address of m
+
+mem[FE] = 0xFFFF /* put constant into memory */
+
+load r0,20 /* load r0 with address on m */ 
+load r10, 0 /* load counter i with 0 */
+load r9, mem[FE] /* load constant first, to large to stroe directly via load instruction */
+
+while(true) {
+	read from stdin into reg
+	load r8, mem[FF]
+	
+	if (reg == 0xFFFF)
+		halt
+	XOR 	r8, r8, r9
+	BZERO	r8, mem[halt] /* to be defined */
+	
+	else
+		store temp as m[i]
+		
+		get new address
+		
+		increment i;
+		
+		if (i == 4) :
+			print out all m values
+			calc p1
+			print out all p values
+			i = 0;
+}
+
+
+do calc parity:
+	p1 = m1 ^ m2 ^ m4;
+	p2 = m1 ^ m3 ^ m4
+	p3 = m2 ^ m3 ^ m4
+	
+	store m1 ^ m4 into temp
+	do p1 back into p1, p2 back into p2
+	store m3 ^ m4 into temp
+	do p3 back into p3
+	

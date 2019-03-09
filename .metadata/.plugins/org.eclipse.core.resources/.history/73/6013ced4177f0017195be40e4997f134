@@ -1,0 +1,123 @@
+
+/* register map */
+
+r0 
+r1 
+r2 
+r3 
+r4 
+r5
+r6
+r7
+r8
+r9 = t0
+rA = t1
+rB = t2
+rC = t3
+rD = const0
+rE = const1
+rF = const2
+
+/* mem map, put in program */
+
+mem[0x40] =  /0x40 to 0x43 reserved for mem /
+mem[0x44] = 0x03 (011)
+mem[0x45[ = 0x05 (101)
+mem[0x46] = 0x05 (110)
+mem[0x47] = 0x07 (111)
+
+mem[FE] = 0xFFFF /* put constant into memory */
+
+/* "load address" is anything, but "load" deferences memory */
+
+load const1, 0xFE
+load one, 0x1
+load four, 4
+load three, 3
+load base, 0x40
+load pbase, 0x044
+
+while(true) {
+	
+	do {
+		cur = stdin.read
+		if (cur == 0xFF) exit
+		
+		m[i] = cur;
+	} while ( i < 4)
+	i = 0;
+	
+	do {
+		cur = stdin.read
+		if (cur == 0xFF) exit
+		pa |= cur << idx
+	} while (i < 3)
+	i = 0;
+	
+	do {
+		
+	
+	} while (i < 4)
+		
+}
+
+main2:
+	mread
+	load idx, 0
+	load pa, 0
+	load size, 3
+	pread
+	
+	
+	load idx, 0
+	j main2
+
+
+readcheck
+	load cur, 0xFF /* read form stdin */
+	xor temp, cur, const1 / temp = (cur == 0xFFFF) */
+	bzero temp, halt /* end if cur == 0xFFFF */ 
+	j ra
+
+mread
+	jal readcheck
+	sind cur, 0, idx,
+	add idx, idx, one
+	sub temp, size, idx
+	bpos temp, mread
+
+pread
+	jal readcheck
+	sl temp, cur, idx 
+	xor pa, pa, cur
+	add idx, idx, one
+	sub temp, size, idx
+	bpos temp, mread
+	 
+
+parCorrect
+	load loc, mem0
+	xor temp, pa, m011
+	bzero temp, flip
+
+flip
+	load temp, loc
+	xor temp, temp, one //flipping bit
+	sind temp, 0, loc
+	j print
+
+
+do {
+	print m[i]
+} while (i < 4);
+
+load idx, 0
+
+print:
+	lind temp, 0, idx // load mem[idx] to tmp
+	load temp, 0xFF //print
+	add idx, idx, one
+	sub temp, size, idx
+	bpos temp, print
+halt:
+	0000

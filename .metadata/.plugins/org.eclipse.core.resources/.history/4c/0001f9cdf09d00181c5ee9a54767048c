@@ -1,0 +1,27 @@
+/*
+ * Autocomplete.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef AUTOCOMPLETE_H_
+#define AUTOCOMPLETE_H_
+
+#include "Term.h"
+
+#pragma once
+class Autocomplete {
+
+private:
+	std::vector<Term>
+	std::vector<Term> allMatches(const std::string &prefix) {
+
+	}
+
+	int numberofMatches(const std::string &prefix) {
+
+	}
+};
+
+#endif /* AUTOCOMPLETE_H_ */

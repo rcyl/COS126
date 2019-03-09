@@ -1,0 +1,44 @@
+/*
+ * Autocomplete.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+#include "Autocomplete.h"
+#include "BSDeluxe.h"
+#include "Term.h"
+#include <algorithm>
+#include <iostream>
+
+Autocomplete::Autocomplete(std::vector<Term> &terms): terms(terms) {
+	sort(terms.begin(), terms.end());
+	for(int i = 0; i < 10; i++)
+		std::cout << terms[i].toString() << std::endl;
+
+}
+
+std::vector<Term> Autocomplete::allMatches(const std::string &prefix) {
+
+	Term t(prefix, 1);
+
+	int first = BSDeluxe<Term>::firstIndexOf(terms, t, ByPrefixOrder<Term>(prefix.size()));
+	int last = BSDeluxe<Term>::lastIndexOf(terms, t, ReverseWeightOrder<Term>());
+
+	std::cout << "first:" << first << std::endl;
+	std::cout << "last:" << last << std::endl;
+
+	return std::vector<Term>(&terms[first], &terms[last]);
+}
+
+int Autocomplete::numberOfMatches(const std::string &prefix) {
+
+	Term t(prefix, 1);
+
+	int first = BSDeluxe<Term>::firstIndexOf(terms, t,
+				ByPrefixOrder<Term>(prefix.length()));
+	int last = BSDeluxe<Term>::lastIndexOf(terms, t,
+				ByPrefixOrder<Term>(prefix.length()));
+
+	return last - first + 1;
+
+}

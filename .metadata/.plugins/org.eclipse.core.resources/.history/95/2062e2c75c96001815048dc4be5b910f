@@ -1,0 +1,17 @@
+/*
+ * play.cpp
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include <array>
+
+int main() {
+
+	std::array<int, 128> arr {};
+
+	return 0;
+}
+

@@ -1,0 +1,28 @@
+/*
+ * sierpinski.cpp
+ *
+ *  Created on: 3 Aug, 2017
+ *      Author: rcyl
+ */
+
+
+#include "sierpinski.h"
+
+Sierpinski::Sierpinski(QWidget *parent) {
+
+};
+
+Sierpinski::~Sierpinski() {
+
+};
+
+void Sierpinski::paintEvent(QPaintEvent *e) {
+
+	 Q_UNUSED(e);
+	 doDrawing();
+}
+
+void Sierpinski::doDrawing() {
+
+
+}

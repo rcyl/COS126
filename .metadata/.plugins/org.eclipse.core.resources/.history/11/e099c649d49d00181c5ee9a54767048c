@@ -1,0 +1,28 @@
+/*
+ * BSDeluxe.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef BSDELUXE_H_
+#define BSDELUXE_H_
+
+#include <vector>
+#include <algorithm>
+
+template <typename Key, class Compare>
+static class BSDeluxe {
+
+public:
+	static int firstIndexOf(std::vector<Key> a, const Key &key, Compare comp) {
+		std::sort(a.begin(), a.end(), comp);
+		return 0l
+	}
+	static int lastIndexOf(std::vector<Key> a, const Key &key, Compare comp);
+
+};
+
+
+
+#endif /* BSDELUXE_H_ */

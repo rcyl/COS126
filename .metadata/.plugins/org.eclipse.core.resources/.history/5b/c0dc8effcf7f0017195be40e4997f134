@@ -1,0 +1,111 @@
+/*
+ * toy.cpp
+ *
+ *  Created on: 7 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <iomanip>
+#include <string>
+#include "toy.h"
+
+#define PRINT(msg) std::cout << msg << std::endl;
+
+Toy::Toy(std::ifstream & prog) : prog(prog)
+{
+	pc = 0x10;
+	memset(reg, 0, 16);
+	memset(mem, 0, 256);
+}
+
+void Toy::runProgram(std::istream & stdin, std::ostream & stdout) {
+
+	std::string line;
+	char input[6];
+
+	for(int i = pc; i < 0xFF && getline(prog, line); i++) {
+		std::cout << mem[i[] << std::endl;
+		mem[i] = (uint16_t) std::stoi(line, nullptr, 16);
+	}
+
+	while(true) {
+		uint16_t ir = mem[pc++];
+		std::cout << std::setbase(16) << "ir: " << ir << std::endl;
+
+		uint16_t op = (ir >> 12) & 0xF;
+		std::cout << "op: " << op;
+
+		uint16_t d = (ir >> 8) & 0xF;
+		std::cout << ", d: " << d;
+
+		uint16_t s = (ir >> 4) & 0xF;
+		std::cout << ", s: " << s;
+
+		uint16_t t = (ir >> 0) & 0xF;
+		std::cout << ", t: " << t;
+
+		uint16_t addr = (ir >> 0) & 0xFF;
+		std::cout << ", addr: " << addr << std::endl;
+
+		if (op == 0) break; /* halt */
+
+		switch(op) {
+
+			case 0x1: reg[d] = reg[s] + reg[t]; break;
+			case 0x2: reg[d] = reg[s] - reg[t]; break;
+			case 0x3: reg[d] = reg[s] & reg[t]; break;
+			case 0x4: reg[d] = reg[s] ^ reg[t]; break;
+			case 0x5: reg[d] = reg[s] << reg[t]; break;
+			case 0x6: reg[d] = reg[s] >> reg[t]; break;
+			case 0x7: reg[d] = addr; break;
+			case 0x8:
+				if (addr == 0xFF)
+					stdout << reg[d] << std::endl; /* write to stdout */
+				else
+					reg[d] = mem[addr];
+				break;
+			case 0x09:
+				if (addr == 0xFF) { /* read from stdin */
+					/* read 5 chars, tilde used so that read doesnt
+					 * end when default delim of \n encountered */
+					std::cin.get(input, 6, '~');
+					line = input;
+					/* replace annoying new line */
+					std::replace(line.begin(), line.end(), '\n', '\0');
+					reg[d] = (uint16_t) std::stoi(line, nullptr, 16);
+				}
+				else {
+					mem[addr] = reg[d];
+				}
+				break;
+			case 0xA:
+				if (reg[t] == 0xFF)
+					stdout << reg[d] << std::endl;
+				else
+					reg[d] = mem[reg[t]];
+				break;
+			case 0xB:
+				if (reg[t] == 0xFF) {
+					std::cin.get(input, 6, '~');
+					line = input;
+					std::replace(line.begin(), line.end(), '\n', '\0');
+					reg[d] = (uint16_t) std::stoi(line, nullptr, 16);
+				} else {
+					mem[reg[t]] = reg[d];
+				}
+				break;
+			case 0xC:
+				if (reg[d] == 0) pc = addr; break;
+			case 0xD:
+				if (reg[d] > 0) pc = addr; break;
+			case 0xE:
+				pc = reg[d]; break;
+			case 0xF: /* store address of "next" pc (since pc++ above) into reg, and jumps into addr*/
+				reg[d] = pc; pc = addr; break;
+		}
+	}
+}

@@ -1,0 +1,39 @@
+/*
+ * Term.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#include "Term.h"
+#include <sstream>
+
+Term::Term(const std::string &query, long weight)
+	: query(!query.empty() ? query :
+			throw std::invalid_argument("query can't be null")),
+			weight( weight >= 0 ? weight :
+			throw std::invalid_argument("weight cant be negative"))
+{
+}
+
+bool Term::operator<(const Term &lhs) const {
+
+	return query < lhs.query;
+}
+
+bool Term::operator==(const Term &lhs) const {
+
+	return query < lhs.query;
+}
+
+std::string Term::toString() {
+
+	std::stringstream ss;
+	ss << weight;
+	ss << '\t';
+	ss << query;
+
+	return ss.str();
+}
+
+

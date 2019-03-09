@@ -1,0 +1,31 @@
+/*
+ * Autocomplete.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+#include "Autocomplete.h"
+#include "BSDeluxe.h"
+#include <algorithm>
+
+Autocomplete::Autocomplete(std::vector<Term> &terms): terms(terms) {}
+
+std::vector<Term> Autocomplete::allMatches(const std::string &prefix) {
+
+	std::vector<Term> v;
+	sort(terms.begin(), terms.end());
+
+	Term t(prefix, 1);
+
+
+	int first = BSDeluxe<Term>::firstIndexOf(terms, Term("aaa", 1), ByPrefixOrder<Term>(1));
+		std::cout << "first-> " << first << std::endl;
+
+		int last = BSDeluxe<Term>::lastIndexOf(terms, Term("aaa", 1), ByPrefixOrder<Term>(3));
+		std::cout << "last->: " << last << std::endl;
+
+
+	return v;
+}
+
+

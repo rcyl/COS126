@@ -1,0 +1,56 @@
+
+load m1, 
+load m2,
+load m3,
+
+pread
+	readcheck
+	load m0, cur
+	
+	readcheck
+	load m1, cur
+	
+	eadcheck
+	load m2, cur
+	
+	readcheck
+	load m3, cur
+	
+
+readcheck
+	load cur, 0xFF /* read form stdin */
+	xor temp, cur, const1 / temp = (cur == 0xFFFF) */
+	bzero temp, halt /* end if cur == 0xFFFF */ 
+	j ra
+
+pcorrectmod
+	xor temp, pa, mask3
+	bzero temp, flipm0
+	xor temp, pa, mask3
+	bzero temp, flipm0
+	xor temp, pa, mask3
+	bzero temp, flipm0
+	xor temp, pa, mask3
+	bzero temp, flipm0
+
+flipm0
+	xor m0, m0, 1
+	print
+
+flipm0
+	xor m1, m1, 1
+	print
+
+flipm2
+	xor m2, m1, 1
+	print
+
+flipm3
+	xor m3, m0, 1
+	print
+
+print 
+	store m0, 0xFF
+	store m1, 0xFF
+	store m2, 0xFF
+	store m3, 0xFF

@@ -1,0 +1,17 @@
+/*
+ * Autocomplete.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+#include "Autocomplete.h"
+
+Autocomplete::Autocomplete(std::vector<Term> &terms): terms(terms) {}
+
+std::vector<Term> allMatches(const std::string &prefix) {
+
+	std::vector v;
+
+}
+
+

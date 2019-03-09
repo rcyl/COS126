@@ -1,0 +1,47 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Jul 29, 2018
+ *      Author: rcyl
+ */
+
+#include <QImage>
+#include <QColor>
+#include <iostream>
+#include "lfsr.h"
+
+int main(int argc, char *argv[]) {
+
+	if (argc < 2) {
+		std::cout << "Usage is lfsr <src> " << std::endl;
+	}
+
+	LFSR lfsr("011010000100100010000", 17);
+	int crypt;
+
+	QImage input("src/xpipe.png");
+	QImage output(input.width(), input.height(), QImage::Format_RGB32);
+	int red, green, blue;
+
+	for(int row = 0; row < input.width(); row++) {
+		for(int col = 0; col < input.height(); col++) {
+			QRgb rgb = input.pixel(row, col);
+			QColor qcolor(rgb);
+
+			crypt = lfsr.generate(8);
+			red = qcolor.red() ^ crypt;
+
+			crypt = lfsr.generate(8);
+			green = qcolor.green() ^ crypt;
+
+			crypt = lfsr.generate(8);
+			blue = qcolor.blue() ^ crypt;
+
+			QRgb outrgb = qRgb(red, green, blue);
+			output.setPixel(row, col, outrgb);
+		}
+	}
+	output.save("src/foo.png");
+
+}
+

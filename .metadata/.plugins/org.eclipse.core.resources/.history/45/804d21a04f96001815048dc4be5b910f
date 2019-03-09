@@ -1,0 +1,24 @@
+/*
+ * MarkovModel.h
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+#ifndef MARKOVMODEL_H_
+#define MARKOVMODEL_H_
+
+#include <map>
+
+class MarkovModel {
+
+
+public:
+	MarkovModel(std::string text, int k);
+
+};
+
+
+
+
+#endif /* MARKOVMODEL_H_ */

@@ -1,0 +1,26 @@
+/*
+ * MarkovModel.cpp
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+
+#include "MarkovModel.h"
+
+MarkovModel::MarkovModel(std::string text, int k) :
+			str(text), k(k) {
+
+	Tuple tuple;
+	std::string substr;
+
+	str.append(text.begin(), text.begin() + k);
+
+	for(int i = 0; i < str.length() - k - 1; i++) {
+
+	}
+
+
+}
+
+int MarkovModel::order() { return k; }

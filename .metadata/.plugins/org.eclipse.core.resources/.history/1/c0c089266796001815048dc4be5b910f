@@ -1,0 +1,88 @@
+/*
+ * MarkovModel.cpp
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include "MarkovModel.h"
+
+
+MarkovModel::MarkovModel(std::string text, int k) :
+			str(text), k(k) {
+
+	std::string substr;
+	std::map<std::string, Tuple>::iterator it;
+	char nextchar;
+
+	/* create "circular text */
+	str.append(text.begin(), text.begin() + k);
+
+	for(char i = 0; i < str.length() - k - 1; i++) {
+		substr = str.substr(i, k);
+		std::cout << "substr is: " << substr << std::endl;
+		nextchar = str[i + k];
+		//std::cout << "nextchar is: " << nextchar << std::endl;
+		it = map.find(substr);
+		if (it == map.end()) {
+			std::cout << "adding new" << std::endl;
+			/* not found */
+			/* create new array */
+			std::array<int, 128> array{};
+			array[nextchar]++;
+			/* create new tuple */
+			auto tuple = std::make_tuple(1, array);
+			/* store inside map */
+			map[substr] = tuple;
+		} else {
+			std::cout << "exists" << std::endl;
+			std::cout << "substr is: " << substr << std::endl;
+			std::cout << "nextchar is: " << nextchar << std::endl;
+			/* already exists */
+			Tuple tuple = map[substr];
+			/* increase frequency by 1 */
+			std::get<0>(tuple)++;
+
+			/* get nextchar frequency array */
+			std::cout << "char is: " << nextchar << std::endl;
+			std::cout << "old freq is: " << std::get<1>(tuple)[nextchar] << std::endl;
+			std::get<1>(tuple)[nextchar]++;
+			std::cout << "new freq is: " << std::get<1>(tuple)[nextchar] << std::endl;
+		}
+	}
+}
+
+MarkovModel::~MarkovModel() {}
+
+int MarkovModel::order() { return k; }
+
+
+std::string MarkovModel::toString() {
+
+	std::string ret;
+
+	for(const auto &pair : map) {
+		std::cout << pair.first << std::endl;
+		ret.append(pair.first);
+		ret.append(": ");
+
+		auto tuple = pair.second;
+		auto array = std::get<1>(tuple);
+		for(int i = 0; i < 128; i++) {
+			if (array[i] != 0) {
+				std::cout << "char i: " << static_cast<char>(i) << std::endl;
+				std::cout << "arr i: " << array[i] << std::endl;
+				ret.push_back(static_cast<char>(i));
+				ret.push_back(' ');
+				ret.append(std::to_string(array[i]));
+			}
+		}
+		ret.append("\n");
+	}
+
+	return ret;
+}
+
+
+

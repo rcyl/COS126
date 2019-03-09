@@ -1,0 +1,25 @@
+/*
+ * main.cpp
+ *
+ *  Created on: 7 Aug, 2017
+ *      Author: rcyl
+ */
+
+
+#include "toy.h"
+
+int main(int argc, char *argv[]) {
+
+	if (argc < 2) {
+		std::cout << "usage is toy {program name} " << std::endl;
+		return 1;
+	}
+
+	std::ifstream file(argv[1]);
+
+	Toy toy(file);
+
+	toy.runProgram(std::cin);
+
+}
+

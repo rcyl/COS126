@@ -1,0 +1,25 @@
+1.keep reading from stdin unitil FFFF is encountered
+
+m[0]
+m[1]
+m[2]
+m[3]
+
+counter = 0;
+
+while(true) {
+	read from stdin into reg
+	if (reg == 0xFFFF)
+		break;
+	else
+		store reg[i] as m[i]
+		increment i;
+		
+		if (i == 4) :
+			calc p1
+			i = 0;
+}
+
+
+do calc p1:
+	

@@ -1,0 +1,26 @@
+/*
+ * sierpinski.h
+ *
+ *  Created on: 3 Aug, 2017
+ *      Author: rcyl
+ */
+
+#pragma once
+
+#include <QWidget>
+#include <QPainter>
+#include <QTextStream>
+
+class Sierpinski : public QWidget {
+
+	public:
+		Sierpinski(QWidget *parent = 0);
+		~Sierpinski();
+
+	protected:
+		void paintEvent(QPaintEvent *);
+
+	private:
+		void doDrawing();
+		qreal len;
+};

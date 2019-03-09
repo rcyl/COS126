@@ -1,0 +1,90 @@
+edited 24th july 2018
+
+/* register map */
+
+r0 = 0
+r1 = temp
+r2 = shift
+r3 = mor
+r4 = ma
+r5 = pa
+r6 = mi
+r7 = pi
+r8 = i
+r9 = 
+rA = 
+rB = 
+rC = 
+rD = 
+rE = 
+rF =
+
+p1 = (m1 ^ m2 ^ m3 ^ m4) ^ m3 =
+		m1 ^ m2 ^ m4 
+
+store m1 to m4 in array
+xor m1 to m4 together to get mor
+
+pi => read parity
+calcpi => calculated parity
+cmpi => compared parity
+
+set failcount = 0
+set i == 2
+read pi
+get calcpi by xor mor ^ m[2 - i]
+get cmpi by comparing pi with calcpi
+if cmpi == 1, set failcount + 1 flip M[2 - i] aka M[2 - i] ^ 1
+i--
+repeat till i = 0
+if failcount == 3,  flip M[3] 
+		
+
+****/
+mor = 0
+mask1 = 1
+mask2 = 2
+mask3 = 3
+maskFF = FF
+
+main:
+	i = 3
+get: 
+	mi => read frm stdin
+	temp = mi & F7
+	bpos temp halt //check for FF in input is sufficient 
+	mor =>  mor ^ mi
+	idx = 3 - i
+	M[idx] = mi
+	i = i - 1
+	bpos i, get
+	i = 2
+	failcount = 0		
+flip: 
+	rpi => read from stdin
+	idx = 2 - i
+	mi = M[idx]
+	calpi = mor ^ mi 
+	cmpi = (calcpi == rpi)
+	bzero cmpi, continue
+	failcount = failcount + 1
+continue:	
+	mi = mi ^ 1
+	print mi
+	i = i - 1
+	bpos i, flip
+	and temp, failcount, mask3
+	bzero temp, print
+	mi = M[mask3]
+	mi = mi ^ 1
+print:
+	print mi
+	j main
+	
+halt:
+	0
+		
+
+
+*/
+

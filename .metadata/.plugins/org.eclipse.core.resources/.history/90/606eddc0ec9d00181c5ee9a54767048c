@@ -1,0 +1,53 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include "BSDeluxe.h"
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+int main() {
+
+	std::vector<Term> v;
+	v.push_back(Term("aaa", 1));
+	v.push_back(Term("bbb", 6));
+	v.push_back(Term("ccc", 3));
+	v.push_back(Term("aaa", 1));
+	v.push_back(Term("bbb", 6));
+	v.push_back(Term("ccc", 3));
+	v.push_back(Term("aaa", 1));
+	v.push_back(Term("bbb", 6));
+	v.push_back(Term("ccc", 3));
+	v.push_back(Term("aaa", 1));
+	v.push_back(Term("bbb", 6));
+	v.push_back(Term("ccc", 3));
+
+
+	sort(v.begin(), v.end(), ReverseWeightOrder<Term>());
+	std::cout << "reverse weight sort" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	sort(v.begin(), v.end(), ByPrefixOrder<Term>(1));
+	std::cout << "prefix sort" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	sort(v.begin(), v.end());
+	std::cout << "lexi sort sort" << std::endl;
+	for(Term t : v) std::cout << t.toString() << std::endl;
+
+	int ans = BSDeluxe<Term>::firstIndexOf(v, Term("b", 1), ByPrefixOrder<Term>(1));
+	std::cout << "first-> " << ans << std::endl;
+
+	ans = BSDeluxe<Term>::lastIndexOf(v, Term("b", 1), ByPrefixOrder<Term>(1));
+	std::cout << "last->: " << ans << std::endl;
+
+
+	return 0;
+}
+

@@ -1,0 +1,18 @@
+#include <iostream>
+#include "MarkovModel.h"
+
+int main() {
+
+	//std::string text1 = "gagggagaggcgagaaa";
+	//std::string text1 = "banana";
+	std::string text1 = "one fish two fish red fish blue fish";
+
+	MarkovModel model1(text3, 4);
+	//std::cout << model1.toString() << std::endl;
+	std::cout << "freq: " << model1.freq("an", 'a') << std::endl;
+	std::cout << "freq: " << model1.freq("na", 'b') << std::endl;
+	std::cout << "freq: " << model1.freq("na", 'a') << std::endl;
+	std::cout << "freq: " << model1.freq("na") << std::endl;
+
+	return 0;
+}

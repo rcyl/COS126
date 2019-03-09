@@ -1,0 +1,29 @@
+/*
+ * Term.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#include <Term.h>
+#include <sstream>
+
+Term::Term(const std::string &query, long weight)
+	: query(query), weight(weight) {}
+
+bool Term::operator<(const Term &lhs) const {
+
+	return query < lhs.query;
+}
+
+std::string Term::toString() {
+
+	std::stringstream ss;
+	ss << weight;
+	ss << '\t';
+	ss << query;
+
+	return ss.toStr();
+}
+
+

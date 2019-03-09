@@ -1,0 +1,99 @@
+edited 24th july 2018
+
+/* register map */
+
+r0 = 0
+r1 = temp
+r2 = shift
+r3 = mor
+r4 = ma
+r5 = pa
+r6 = mi
+r7 = pi
+r8 = i
+r9 = 
+rA = 
+rB = 
+rC = 
+rD = 
+rE = 
+rF =
+
+p1 = (m1 ^ m2 ^ m3 ^ m4) ^ m3 =
+		m1 ^ m2 ^ m4 
+		
+mi => message bit at position i, ie m3 is at bit 2 */
+mor => xor of all input msg bits
+
+/NOTE THE ORDER OF THE BITS/
+pa => mask of bits to be corrected /* p1 p2 p3 */
+ma  => bit shifted sum of all msg bits /* m4 m3 m2 m1 */ 
+
+****/
+
+pa = 0
+mor = 0
+ma = 0
+mask1 = 1
+mask3 = 3
+mask8 = 8
+
+main:
+	i = 3
+	j get&shift() (3,2,1,0)
+	
+	j comp&shift()(2,1,0)
+	
+	ma = ma ^ pa // to correct flipped bits
+	
+	print(0)
+	print(1)
+	print(2)
+	print(3)
+	j main
+
+halt:
+	0
+
+get&shift:     
+	mi => read frm stdin
+	temp = mi & mask8
+	bpostv temp halt //check for FFFF, well just bit 3 
+	mor =>  mor ^ mi
+	shift => 3 - i
+	temp = (1 << shift)
+	ma = ma + temp
+	i = i - 1
+	bzero i comp&shift - 1 x instruction
+	j get&shift
+			
+i = 2		
+comp&shift:
+	pi => read from stdin
+	temp = ma >> i 
+	mi = temp & 1
+	cp = mor ^ mi 
+	temp = (cp == pi)
+	
+	/* technically should only do this if temp != 0, but do nontheless to save 
+	lines of code */
+	
+	temp << (1 << shift)
+	pa += temp 
+		
+	i = i - 1
+	bzero i, print - 1 x instruction
+	j comp&shift
+		
+i = 3		
+print
+	shift => 3 - i
+	temp = ma >> shift
+	mi = temp & 1
+	print mi
+	i = i - 1
+		
+	
+
+*/
+

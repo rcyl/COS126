@@ -1,0 +1,40 @@
+/*
+ * sierpinski.cpp
+ *
+ *  Created on: 3 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <QtMath>
+
+#include "sierpinski.h"
+
+Sierpinski::Sierpinski(QWidget *parent) {
+
+	len = 100;
+
+};
+
+Sierpinski::~Sierpinski() {
+
+};
+
+void Sierpinski::paintEvent(QPaintEvent *e) {
+
+	 Q_UNUSED(e);
+	 doDrawing();
+
+	 len /= 2;
+}
+
+void Sierpinski::doDrawing() {
+
+	QPainter qp(this);
+	qp.translate(width() / len, height() / 2);
+
+	QPolygon poly;
+	qreal height = len * 3 / qsqrt();
+
+	poly << QPoint(0, 0) << QPoint(len, 0)
+
+}

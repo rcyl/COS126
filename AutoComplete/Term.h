@@ -1,0 +1,71 @@
+/*
+ * Term.h
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+#ifndef TERM_H_
+#define TERM_H_
+
+#pragma once
+
+#include <string>
+#include <stdexcept>
+
+class Term{
+public:
+	std::string query;
+	long weight;
+	Term(const std::string &query, long weight);
+	std::string toString();
+	bool operator<(const Term &lhs) const;
+};
+
+template <typename T>
+class ReverseWeightOrder {
+public:
+	bool operator() (const T& lhs, const T& rhs) const {
+		return lhs.weight > rhs.weight;
+	}
+
+	bool less(const T& lhs, const T& rhs) const {
+		return lhs.weight > rhs.weight;
+	}
+
+	bool more(const T& lhs, const T& rhs) const {
+		return lhs.weight < rhs.weight;
+	}
+};
+
+template <typename T>
+class ByPrefixOrder {
+public:
+	ByPrefixOrder(int r) {
+		if (r < 0)
+			throw std::invalid_argument("r cannot be negative");
+		this-> r = r;
+	}
+	bool operator()(const T& lhs, const T& rhs) const {
+		std::string sublhs = lhs.query.substr(0, r);
+		std::string subrhs = rhs.query.substr(0, r);
+		return (sublhs < subrhs);
+	}
+
+	bool less(const T& lhs, const T& rhs) const {
+		std::string sublhs = lhs.query.substr(0, r);
+		std::string subrhs = rhs.query.substr(0, r);
+		return (sublhs < subrhs);
+	}
+
+	bool more(const T& lhs, const T& rhs) const {
+		std::string sublhs = lhs.query.substr(0, r);
+		std::string subrhs = rhs.query.substr(0, r);
+		return (sublhs > subrhs);
+	}
+	int r;
+};
+
+
+
+#endif /* TERM_H_ */

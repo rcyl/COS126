@@ -1,0 +1,66 @@
+1.keep reading from stdin unitil FFFF is encountered
+
+/* register map */
+
+r0 (base) address of m in memory 
+r1 i
+r2
+r3
+r4
+r5
+r6
+r7
+r8
+r9
+rA = temp1
+rB = temp2
+rC = temp3
+rD = const1
+rE = const2
+rF = const3
+
+/* mem map */
+
+mem[0x40] = m0
+mem[FE] = memFFFF /* put constant into memory */
+
+
+load base, m0
+load i , 0
+load constant1, memFFFF
+
+
+while(true) {
+	read from stdin into reg
+	load temp, mem[FF]
+	
+	if (reg == 0xFFFF)
+		halt
+	XOR 	temp, temp, const1 
+	BZERO	r8, mem[halt] /* to be defined */
+	
+	else
+		store temp as m[i]
+		
+		get new address
+		
+		increment i;
+		
+		if (i == 4) :
+			print out all m values
+			calc p1
+			print out all p values
+			i = 0;
+}
+
+
+do calc parity:
+	p1 = m1 ^ m2 ^ m4;
+	p2 = m1 ^ m3 ^ m4
+	p3 = m2 ^ m3 ^ m4
+	
+	store m1 ^ m4 into temp
+	do p1 back into p1, p2 back into p2
+	store m3 ^ m4 into temp
+	do p3 back into p3
+	

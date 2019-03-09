@@ -1,0 +1,26 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Jul 29, 2018
+ *      Author: rcyl
+ */
+
+#include <QImage>
+#include <iostream>
+#include "lfsr.h"
+
+int main() {
+	LFSR lfsr("01101000010", 9);
+	std::cout << lfsr.toString() << std::endl;
+
+	int bit;
+	for(int i = 0; i < 10; i++) {
+		bit = lfsr.step();
+		std::cout << lfsr.toString() << " " << bit << std::endl;
+	}
+	std::cout << std::endl;
+
+	QImage qImag("src/pipe.png");
+
+	std::cout << "height: " << qImag.height();
+}

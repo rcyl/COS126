@@ -1,0 +1,21 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Aug 12, 2018
+ *      Author: rcyl
+ */
+
+
+#include "Term.h"
+#include <vector>
+
+int main() {
+
+	Term t1("abc", 123);
+	Term t2("fas", 456);
+	std::vector<Term> v;
+
+
+	return 0;
+}
+

@@ -1,0 +1,20 @@
+23:31:17 **** Incremental Build of configuration Debug for project HammingTOY ****
+make all 
+Building file: ../main.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -std=c++11 -c -fmessage-length=0 -MMD -MP -MF"main.d" -MT"main.o" -o "main.o" "../main.cpp"
+Finished building: ../main.cpp
+ 
+Building file: ../toy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -std=c++11 -c -fmessage-length=0 -MMD -MP -MF"toy.d" -MT"toy.o" -o "toy.o" "../toy.cpp"
+Finished building: ../toy.cpp
+ 
+Building target: HammingTOY
+Invoking: GCC C++ Linker
+g++  -o "HammingTOY"  ./main.o ./toy.o   
+Finished building target: HammingTOY
+ 
+
+23:31:17 Build Finished (took 571ms)
+

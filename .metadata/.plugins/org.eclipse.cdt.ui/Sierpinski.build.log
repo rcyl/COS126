@@ -1,0 +1,16 @@
+17:11:33 **** Build of configuration Debug for project Sierpinski ****
+make all 
+Building file: ../fcircle.cpp
+Invoking: GCC C++ Compiler
+g++ -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtGui -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"fcircle.d" -MT"fcircle.o" -o "fcircle.o" "../fcircle.cpp"
+In file included from /usr/include/x86_64-linux-gnu/qt5/QtCore/QtGlobal:1:0,
+                 from ../fcircle.h:11,
+                 from ../fcircle.cpp:8:
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h:1067:4: error: #error "You must build your code with position independent code if Qt was built with -reduce-relocations. " "Compile your code with -fPIC (-fPIE is not enough)."
+ #  error "You must build your code with position independent code if Qt was built with -reduce-relocations. "\
+    ^
+subdir.mk:29: recipe for target 'fcircle.o' failed
+make: *** [fcircle.o] Error 1
+
+17:11:33 Build Finished (took 177ms)
+

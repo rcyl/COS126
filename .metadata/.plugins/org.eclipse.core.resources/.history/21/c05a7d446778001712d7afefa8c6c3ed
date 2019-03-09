@@ -1,0 +1,68 @@
+/*
+ * sierpinski.cpp
+ *
+ *  Created on: 3 Aug, 2017
+ *      Author: rcyl
+ */
+
+#include <QtMath>
+#include <iostream>
+#include "sierpinski.h"
+
+
+const qreal SQRT3 = 1.73205080757;
+
+Sierpinski::Sierpinski(qreal len, int N, QWidget *parent) : QWidget(parent){
+
+	sierpinski(N, 50, 50, len);
+	repaint();
+};
+
+Sierpinski::~Sierpinski() { };
+
+qreal Sierpinski::calcHeight(qreal len) { return len / 2 * SQRT3; }
+
+void Sierpinski::sierpinski(int n, qreal x, qreal y, qreal length) {
+
+	if (n == 0)
+		return;
+
+	QPolygon poly;
+	qreal height = calcHeight(length);
+
+	poly << QPoint(x, y) << QPoint(x - length/2, (y + height)) <<  QPoint(x + length/2, (y + height));
+	triangles.append(poly);
+
+	sierpinski(n - 1, x - length/2, y, length / 2); /* left side */
+	sierpinski(n - 1, x, (y + height), length / 2); /* top side */
+	sierpinski(n - 1, x + length/2, y, length / 2); /* right side */
+
+}
+
+void Sierpinski::paintEvent(QPaintEvent *e) {
+
+	 Q_UNUSED(e);
+	 doDrawing();
+}
+
+void Sierpinski::doDrawing() {
+
+	QPainter qp(this);
+	qp.translate(width()/2 , height()/2);
+	qp.scale(1, -1); /* reverse y coordinate */
+
+	for(int i = 0; i < triangles.size(); i++) {
+
+		QPen pen(Qt::red, 1, Qt::SolidLine);
+		qp.setPen(pen);
+
+		QBrush brush;
+		brush.setColor(Qt::red);
+		brush.setStyle(Qt::SolidPattern);
+
+		QPainterPath path;
+		path.addPolygon(triangles[i]);
+		qp.drawPolygon(triangles[i]);
+		qp.fillPath(path, brush);
+	}
+}

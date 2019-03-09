@@ -1,0 +1,39 @@
+/*
+ * MarkovModel.cpp
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+
+#include "MarkovModel.h"
+
+MarkovModel::MarkovModel(std::string text, int k) :
+			str(text), k(k) {
+
+	Tuple tuple;
+	std::string substr;
+	std::map<std::string, Tuple>::iterator it;
+	std::array<int, 128> alphacount;
+	char nextchar;
+
+	/* create "circular text */
+	str.append(text.begin(), text.begin() + k);
+
+	for(int i = 0; i < str.length() - k - 1; i++) {
+		substr = str.substr(i, k);
+		nextchar = str[i + k];
+		it = map.find(substr);
+		if (it == map.end()) {
+			/* not found */
+			alphacount =
+
+
+		} else {
+			/* already exists */
+		}
+	}
+
+}
+
+int MarkovModel::order() { return k; }

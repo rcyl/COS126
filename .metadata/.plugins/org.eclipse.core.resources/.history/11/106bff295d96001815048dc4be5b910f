@@ -1,0 +1,27 @@
+/*
+ * play.cpp
+ *
+ *  Created on: Aug 2, 2018
+ *      Author: rcyl
+ */
+
+#include <iostream>
+#include <array>
+
+int main() {
+
+	std::array<int, 128> arr {};
+	std::string str;
+
+	arr['a'] = 1;
+	arr['b'] = 1;
+
+	for(char i = 0; i < 128; i++) {
+		str.append(std::to_string(i));
+	}
+
+	std::cout << str << std::endl;
+
+	return 0;
+}
+

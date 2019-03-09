@@ -1,0 +1,132 @@
+
+/* register map */
+
+r0 
+r1 
+r2 
+r3 
+r4 
+r5
+r6
+r7
+r8
+r9 = 
+rA = 
+rB =
+rC = 
+rD = 
+rE = 
+rF = 
+
+/* mem map, put in program */
+
+mem[0x40] =  /0x40 to 0x43 reserved for m /
+mem[0x44] = 0x03 (011) // pmask
+mem[0x45[ = 0x05 (101)
+mem[0x46] = 0x05 (110)
+mem[0x47] = 0x07 (111)
+
+mem[FE] = 0xFFFF /* put constant into memory */
+
+/* "load address" is anything, but "load" deferences memory */
+
+load const1, 0xFE
+load one, 0x1
+load four, 4
+load three, 3
+load base, 0x40
+load pbase, 0x044
+
+while(true) {
+	
+	i = 0;
+	do {
+		cur = stdin.read
+		if (cur == 0xFF) exit
+		
+		m[i] = cur;
+	} while ( i < 4)
+	
+	i = 0;
+	do {
+		cur = stdin.read
+		if (cur == 0xFF) exit
+		pa |= cur << idx
+	} while (i < 3)
+	
+	i = 0;
+	do {
+		if (pa & pm[i]) {
+			m[i] = ~m[i]
+			break;
+		}
+	
+	} while (i < 4)
+	
+	i = 0;
+	print
+}
+
+main2:
+	load idx, 0
+	mread
+	
+	load idx, 0
+	pread
+	
+	load idx, 0
+	pcorrect
+	
+	load idx, 0
+	print
+	j main2
+
+readcheck
+	load cur, 0xFF /* read form stdin */
+	xor temp, cur, const1 / temp = (cur == 0xFFFF) */
+	bzero temp, halt /* end if cur == 0xFFFF */ 
+	j ra
+
+mread
+	jal readcheck
+	add temp, mbase, idx
+	sind cur, 0, temp
+	add idx, idx, one
+	sub temp, four, idx
+	bpos temp, mread
+
+pread
+	jal readcheck
+	sl temp, cur, idx 
+	xor pa, pa, cur
+	add idx, idx, one
+	sub temp, three, idx
+	bpos temp, mread
+	 
+pcorrect
+	add temp, idx, pbase // temp = pbase + idx
+	lind temp, 0, temp // temp = mem[pbase + idx]
+	xor temp, pa, temp // temp = pa ^ mem[pbase + idx]
+	bzero temp, flip
+	add idx, idx, one
+	sub temp, four, idx
+	bpos temp, pcorrect
+	
+flip
+	add loc, idx, mbase // mbase + idx
+	lind temp, 0, loc // temp = mem[mbase + idx]
+	xor temp, temp, one // temp = ~temp
+	sind temp, 0, loc // mem[mbase + idx] = temp
+	j print
+
+print:
+	load idx, 0
+printloop:
+	add temp, idx, mbase // temp = mbase + mdx
+	lind temp, 0, temp // load mem[idx] to tmp
+	load temp, 0xFF //print
+	add idx, idx, one
+	sub temp, four, idx
+	bpos temp, printloop
+halt:
+	0000
